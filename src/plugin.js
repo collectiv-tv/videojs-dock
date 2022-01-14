@@ -17,7 +17,7 @@ export class Title extends Component {
     const tech = player.$('.vjs-tech');
 
     tech.setAttribute('aria-labelledby', this.title.id);
-    tech.setAttribute('aria-describedby', this.description.id);
+    tech.setAttribute('aria-describedby', this.producer.id);
   }
 
   createEl() {
@@ -28,30 +28,43 @@ export class Title extends Component {
     }, {
       id: `vjs-dock-title-${guid()}`
     });
-    const desc = dom.createEl('div', {
-      className: 'vjs-dock-description',
-      title: this.options_.description,
-      innerHTML: this.options_.description
+    const producer = dom.createEl('div', {
+      className: 'vjs-dock-producer',
+      title: this.options_.producer,
+      innerHTML: this.options_.producer
     }, {
-      id: `vjs-dock-description-${guid()}`
+      id: `vjs-dock-producer-${guid()}`
+    });
+    const schedule = dom.createEl('div', {
+      className: 'vjs-dock-schedule',
+      title: this.options_.schedule,
+      innerHTML: this.options_.schedule
+    }, {
+      id: `vjs-dock-schedule-${guid()}`
     });
     const el = super.createEl('div', {
       className: 'vjs-dock-text'
     });
 
     this.title = title;
-    this.description = desc;
+    this.producer = producer;
+    this.schedule = schedule;
 
     el.appendChild(title);
-    el.appendChild(desc);
+    el.appendChild(producer);
+    el.appendChild(schedule);
+
     return el;
   }
 
-  update(title, description) {
+  update(title, producer, schedule) {
     this.title.innerHTML = '';
-    this.description.innerHTML = '';
+    this.producer.innerHTML = '';
+    this.schedule.innerHTML = '';
+
     this.title.appendChild(document.createTextNode(title));
-    this.description.appendChild(document.createTextNode(description));
+    this.producer.appendChild(document.createTextNode(producer));
+    this.schedule.appendChild(document.createTextNode(schedule));
   }
 }
 
@@ -86,7 +99,8 @@ const dock = function(options) {
   const settings = {
     title: {
       title: opts.title || '',
-      description: opts.description || ''
+      producer: opts.producer || '',
+      schedule: opts.schedule || ''
     }
   };
 
@@ -111,7 +125,7 @@ const dock = function(options) {
     if (!title) {
       title = this.title = this.addChild('title', settings.title, index);
     } else {
-      title.update(settings.title.title, settings.title.description);
+      title.update(settings.title.title, settings.title.producer, settings.title.schedule);
     }
 
     this.one(title, 'dispose', function() {
@@ -122,20 +136,21 @@ const dock = function(options) {
       this.shelf = null;
     });
 
-    // Update aria attributes to describe video content if title/description
+    // Update aria attributes to describe video content if title/producer
     // IDs and text content are present. If unavailable, accessibility
     // landmark can fall back to generic `Video Player` aria-label.
     const titleEl = title.title;
-    const descriptionEl = title.description;
+    const producerEl = title.producer;
+
     const titleId = titleEl.id;
-    const descriptionId = descriptionEl.id;
+    const producerId = producerEl.id;
 
     if (titleId && titleEl.textContent) {
       this.setAttribute('aria-labelledby', this.id() + ' ' + titleId);
     }
 
-    if (descriptionId && descriptionEl.textContent) {
-      this.setAttribute('aria-describedby', descriptionId);
+    if (producerId && producerEl.textContent) {
+      this.setAttribute('aria-describedby', producerId);
     }
   }, true);
 };

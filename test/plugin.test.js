@@ -57,19 +57,20 @@ QUnit.test('registers itself with video.js', function(assert) {
   );
 });
 
-QUnit.test('adds aria attributes to the player when both title and description values are present in options', function(assert) {
+QUnit.test('adds aria attributes to the player when title / producer / schedules values are present in options', function(assert) {
   assert.expect(2);
 
   this.player.dock({
     title: 'Test Title',
-    description: 'Test description.'
+    producer: 'John Doe',
+    schedule: '09:02 - 09:19'
   });
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
   const titleId = this.player.title.title.id;
-  const descriptionId = this.player.title.description.id;
+  const producerId = this.player.title.producer.id;
 
   assert.ok(
     this.player.getAttribute('aria-labelledby').includes(titleId),
@@ -77,8 +78,8 @@ QUnit.test('adds aria attributes to the player when both title and description v
   );
 
   assert.ok(
-    this.player.getAttribute('aria-describedby').includes(descriptionId),
-    'the plugin adds an aria-describedby to the player based on description ID'
+    this.player.getAttribute('aria-describedby').includes(producerId),
+    'the plugin adds an aria-describedby to the player based on producer ID'
   );
 });
 
@@ -101,25 +102,25 @@ QUnit.test('adds aria-labelledby attribute to the player when only title is pass
 
   assert.ok(
     this.player.getAttribute('aria-describedby') === null,
-    'the plugin does not add an empty aria-describedby to the player if description text is ""'
+    'the plugin does not add an empty aria-describedby to the player if producer text is ""'
   );
 });
 
-QUnit.test('adds aria-describedby attribute to the player when only description is passed through options', function(assert) {
+QUnit.test('adds aria-describedby attribute to the player when only producer is passed through options', function(assert) {
   assert.expect(2);
 
   this.player.dock({
-    description: 'Test description.'
+    producer: 'John Doe'
   });
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
-  const descriptionId = this.player.title.description.id;
+  const producerId = this.player.title.producer.id;
 
   assert.ok(
-    this.player.getAttribute('aria-describedby').includes(descriptionId),
-    'the plugin adds an aria-describedby to the player based on description ID'
+    this.player.getAttribute('aria-describedby').includes(producerId),
+    'the plugin adds an aria-describedby to the player based on producer ID'
   );
 
   assert.ok(
