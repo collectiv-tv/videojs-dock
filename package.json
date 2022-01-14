@@ -1,8 +1,8 @@
 {
-  "name": "videojs-dock",
+  "name": "collectiv-tv-videojs-dock",
   "version": "3.0.0",
   "description": "Dock plugin for videojs",
-  "main": "dist/videojs-dock.cjs.js",
+  "main": "dist/collectiv-tv-videojs-dock.cjs.js",
   "keywords": [
     "dock",
     "videojs",
@@ -14,14 +14,14 @@
     "type": "git",
     "url": "https://github.com/brightcove/videojs-dock"
   },
-  "module": "dist/videojs-dock.es.js",
+  "module": "dist/collectiv-tv-videojs-dock.es.js",
   "generator-videojs-plugin": {
     "version": "7.3.2"
   },
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
-    "build:css": "node-sass src/plugin.scss dist/videojs-dock.css --output-style=compressed --linefeed=lf",
+    "build:css": "node-sass src/plugin.scss dist/collectiv-tv-videojs-dock.css --output-style=compressed --linefeed=lf",
     "build:js": "rollup -c scripts/rollup.config.js",
     "clean": "shx rm -rf ./dist ./test/dist",
     "postclean": "shx mkdir -p ./dist ./test/dist",
