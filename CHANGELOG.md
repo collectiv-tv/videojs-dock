@@ -1,3 +1,6 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/brightcove/videojs-dock/compare/v3.0.0...v3.1.0) (2022-01-14)
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/brightcove/videojs-dock/compare/v2.2.0...v3.0.0) (2021-12-17)
 
